@@ -2,3 +2,7 @@ ShortStories
 CS317-IR-Programming+Assignment+-2+Spring+2019.pdf
 SampleQueries.txt
 test.python
+client.py
+server.py
+inverted.pickle
+inverted1.pickle
