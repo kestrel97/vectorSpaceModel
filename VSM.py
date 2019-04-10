@@ -3,8 +3,7 @@
 import re, os, time, pickle, math, operator
 from pprint import pprint
 
-def fetchCollection():
-    stopWords = ['a','is','the','of','all','and','to','can','be','as','once','for','at','am','are','has','have','had','up','his','her','in','on','no']
+def fetchCollection(stopWords):
     terms = []
     docId = {}
     index = {}
@@ -62,9 +61,11 @@ if __name__ == '__main__':
     print("\n------------Ad-Hoc Retrieval via Inverted Index-----------\n(Assumptions: Pre-processing removes all "
     "punctuation marks, stop words, repeated words & split the words like drawing-room into drawing & room)\n\n ***Statistics about Collection***")
 
+    stopWords = ['a','is','the','of','all','and','to','can','be','as','once','for','at','am','are','has','have','had','up','his','her','in','on','no']
+
     if not os.path.exists('inverted.pickle'):
         start = time.clock()
-        index, T, stats, termDict = fetchCollection()
+        index, T, stats, termDict = fetchCollection(stopWords)
         print("Corpus loaded from files  in: %.3f seconds" % (time.clock() - start))
         # writing VSM to file
         out = open("inverted.pickle", "wb")
@@ -109,7 +110,7 @@ if __name__ == '__main__':
             for q in qList:
                 q = re.findall(r'[a-zA-Z0-9]+', q)
                 q = q[0]
-                if q:
+                if q and q not in stopWords:
                     if q not in qToken.keys():
                         qToken.setdefault(q,1)
                     else: qToken[q] = qToken[q]+1
